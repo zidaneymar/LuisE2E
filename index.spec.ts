@@ -3,7 +3,7 @@ import { ComposerApi } from './composerApi';
 import { DirectLineTester } from "./directLineTester";
 
 jest.setTimeout(1000 * 60 * 10);
-const directlineToken = '<your directline token>';
+const directlineToken = '';
 
 function sleep(ms) {
     return new Promise((resolve) => {
@@ -16,8 +16,8 @@ test('could publish luis bot', async () => {
     expect(publishResult).toBeTruthy();
 })
 
-test('bot works properly', async () => {
-    it('add todo flow', async () => {
+describe('bot works properly', async () => {
+    test('add todo flow', async () => {
         const tester = new DirectLineTester(directlineToken);
         const result1 = await tester.SendAndGetMessages('add');
         expect(result1[0]).toBe("What would you like to add?");
@@ -27,7 +27,7 @@ test('bot works properly', async () => {
         expect(result3[0]).toBe("Sure. I've added **abcdefg** to **todo** list. You have 1 items in your list.");
     })
 
-    it('add todo flow', async () => {
+    test('add todo flow', async () => {
         const tester = new DirectLineTester(directlineToken);
         const result1 = await tester.SendAndGetMessages('add');
         expect(result1[0]).toBe("What would you like to add?");
@@ -48,7 +48,7 @@ async function PublishLuisBot() {
     const jsonResult = JSON.parse(tokenResponse);
     const token = jsonResult.accessToken;
     const botName = 'ToDoBotWithLuisSample-37';
-    const botId = '16588.131996837154';
+    const botId = '55586.955975498255';
     const targetName = 'testPublish';
     const updateSettingsResult = await composerAPI.SetAppSettings(token, botId, botName, targetName);
     console.log(`update result: ${updateSettingsResult}`);
