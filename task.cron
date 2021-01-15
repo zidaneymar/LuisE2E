@@ -1,0 +1,1 @@
+0 * * * * /bin/sh /home/azureuser/LuisE2E/runAndSendMail.sh

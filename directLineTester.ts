@@ -1,5 +1,11 @@
 import * as axios from 'axios';
 
+function sleep(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+}
+
 export class DirectLineTester {
     private token: string;
     private conversationId: string;
@@ -65,6 +71,7 @@ export class DirectLineTester {
             catch (error) {
                 console.log("%O", error);
                 retryCount--;
+                sleep(10000)
             }
         }
         return undefined;
@@ -72,18 +79,27 @@ export class DirectLineTester {
 
 
     public async getLatestResponse() {
-        if (!this.conversationId) {
-            await this.createConversation();
-        }
-        const endpoint = `https://directline.botframework.com/v3/directline/conversations/${this.conversationId}/activities`;
-        const response = await axios.default({
-            url: endpoint,
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${this.token}`
+        let responseMsg = undefined;
+        let retryCount = 2;
+        while (!responseMsg && retryCount > 0) {
+            if (!this.conversationId) {
+                await this.createConversation();
             }
-        })
-        return response.data;
+            const endpoint = `https://directline.botframework.com/v3/directline/conversations/${this.conversationId}/activities`;
+            const response = await axios.default({
+                url: endpoint,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            })
+            responseMsg = response.data;
+            if (!responseMsg) {
+                await sleep(10000);
+                retryCount--;
+            }
+        }
+        return responseMsg;
     }
 
     public async SendAndAssert(messageToSend: string, messagesToReceive: string[]) {
