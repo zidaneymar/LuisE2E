@@ -44,7 +44,7 @@ export class DirectLineTester {
     }
 
     public async sendMessage(text: string) {
-        let retryCount = 2;
+        let retryCount = 3;
         while (retryCount > 0) {
             try {
                 if (!this.conversationId) {
@@ -71,7 +71,7 @@ export class DirectLineTester {
             catch (error) {
                 console.log("%O", error);
                 retryCount--;
-                sleep(10000)
+                await sleep(20000)
             }
         }
         return undefined;
@@ -80,7 +80,7 @@ export class DirectLineTester {
 
     public async getLatestResponse() {
         let responseMsg = undefined;
-        let retryCount = 2;
+        let retryCount = 3;
         while (!responseMsg && retryCount > 0) {
             if (!this.conversationId) {
                 await this.createConversation();
@@ -95,7 +95,7 @@ export class DirectLineTester {
             })
             responseMsg = response.data;
             if (!responseMsg) {
-                await sleep(10000);
+                await sleep(20000);
                 retryCount--;
             }
         }

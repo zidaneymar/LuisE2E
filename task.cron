@@ -1,1 +1,1 @@
-0 * * * * /bin/sh /home/azureuser/LuisE2E/runAndSendMail.sh
+30 3 * * * /bin/sh /home/azureuser/LuisE2E/runAndSendMail.sh >> /home/azureuser/LuisE2E/e2etest.log 2>&1

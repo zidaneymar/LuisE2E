@@ -8,8 +8,8 @@ cd /home/azureuser/BotFramework-Composer/Composer
 git fetch --all
 git reset --hard HEAD
 git pull
-yarn && yarn build 
-yarn start &
+/home/azureuser/.npm-global/bin/yarn && /home/azureuser/.npm-global/bin/yarn build 
+/home/azureuser/.npm-global/bin/yarn start &
 
 sleep 10
 
